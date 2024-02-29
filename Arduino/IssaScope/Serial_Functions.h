@@ -108,6 +108,98 @@ void Opto_LED4_Test(){
 }
 
 
+/* ----------------------------------------------------------------------------------*/
+/* ----------------------- Inititate new stimulation sequence -----------------------*/
+void SetTriggerMode(){
+  arg = SCmd.next();
+  if (arg != NULL){
+    aNumber = atoi(arg);
+    TriggerMode = aNumber;
+  }
+
+  if (TriggerMode == 0){
+    TriggerModeFlag = false;
+  }
+
+  if (TriggerMode > 0){
+    TriggerModeFlag = true;
+  }
+}
+
+void SetTrigger(){ 
+  if (TriggerMode > 0){
+    for (int trig = 0; trig <= TriggerMode-1; trig++){
+      arg = SCmd.next();
+      if (arg != NULL){
+        aNumber = atoi(arg);
+        TriggerArray[trig] = aNumber; 
+      }
+    }
+  }
+  TriggerTime = TriggerArray[tr]; 
+}
+
+
+void SetStimulus(){
+  arg = SCmd.next();
+  if (arg != NULL){
+    aNumber = atoi(arg);
+    ResolutionMillis = aNumber;
+  }
+  arg = SCmd.next();
+  if (arg != NULL){
+    aNumber = atoi(arg);
+    iLoop = aNumber;
+  }
+  arg = SCmd.next();
+  if (arg != NULL){
+    aNumber = atoi(arg);
+    PreAdaptMillis = aNumber;
+  }
+
+  i = 1;
+  t = 0;
+  td = 0;
+  tr = 0;
+  PreAdaptationFlag = true;
+
+  PreviousMillis = millis();
+  tPreviousMillis = millis();
+  tdPreviousMillis = millis();
+
+
+  tdDiffMillis = 0;
+  
+  digitalWrite(Trigger, HIGH);
+  TriggerFlag = true;  
+  StimulusFlag = true;
+}
+
+
+
+/* ----------------------------------------------------------------------------------*/
+/* ---------------------------- Play stimulation sequence ---------------------------*/
+void Stimulus(){
+  for (int l = 0; l <= 3; l++) {
+    arg = SCmd.next();
+    if (arg != NULL){
+      aNumber = atoi(arg);
+      tlc.setPWM(Opto_LED_Array[l],aNumber/100*LED_Power);    
+    }
+  }
+  tlc.write();
+}
+
+/* ----------------------------------------------------------------------------------*/
+/* ---------------------------- Stop stimulation sequence ---------------------------*/
+void StopStimulus(){
+  StimulusFlag = false;
+  for (int l = 0; l <= 3; l++) {
+    tlc.setPWM(Opto_LED_Array[l],0); 
+  }
+  tlc.write();
+}
+
 
 
 /* ----------------------------------------------------------------------------------*/
@@ -314,6 +406,12 @@ void IR_LED4_On(){
 
 
 void SCmdAddCommand(){
+  SCmd.addCommand("P", Stimulus);
+  SCmd.addCommand("S", SetStimulus);
+  SCmd.addCommand("M", SetTriggerMode);
+  SCmd.addCommand("T", SetTrigger);
+  SCmd.addCommand("O", StopStimulus);
+
   SCmd.addCommand("O10", Opto_LED1_Off);
   SCmd.addCommand("O1", Opto_LED1_On);
   SCmd.addCommand("T1", Opto_LED1_Test);

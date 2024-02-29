@@ -107,7 +107,7 @@ class Scope():
 
     def GetOptoLED(self,i):
         if self.ui.GetOptoLEDFlag == True:
-            self.Opto_LED_Val = self.ui.Opto_LED_Slider[i].value()
+            self.Opto_LED_Val = self.ui.Opto_LED_Slider[i].value()/10
             self.ui.Opto_LED_Value[i].setText(str(self.Opto_LED_Val) + ' %')
             if self.serial_port.is_open:
                 self.serial_port.write(str('O' + str(i + 1) + (' ') + str(self.Opto_LED_Val) + '\n').encode('utf-8'))
@@ -226,7 +226,7 @@ class Scope():
                 self.ui.IR_LED_Value[i].setText(str(self.AllIR_Val) + ' %')
 
                 if self.serial_port.is_open:
-                    self.serial_port.write(str('R' + str(i + 1) + (' ') + str(self.AllWhite_Val) + '\n').encode('utf-8'))
+                    self.serial_port.write(str('R' + str(i + 1) + (' ') + str(self.AllIR_Val) + '\n').encode('utf-8'))
                     time.sleep(0.01)
                 else:
                     self.ui.Scope_Serial_label.setText('Device is not connected: LED value change will not be applied')
@@ -297,7 +297,34 @@ class Scope():
 
 
 
+    # Data Recording Functions
+    def BrowseRecordFolder(self):
+        FolderName = QFileDialog.getExistingDirectory(self,
+                                                      caption = 'Hey! Select the folder where your experiment will be saved',
+                                                      dir = ".\Recordings")
+        if FolderName:
+                self.ui.Scope_Virtual_FolderName_label.setText(FolderName)
+                self.ui.Scope_Virtual_FileName_label.setText(FolderName)
+                self.ui.Scope_Recording_FileName_label.setText(FolderName)
+                self.ui.Scope_Recording_RecordFolder_value.setEnabled(True)
+                self.ui.Scope_Recording_RecordFolder_value.setPlaceholderText("Enter a file name")
 
+    def RecordFolderText(self):
+        FolderName = self.ui.Scope_Virtual_FileName_label.text()
+        FileName = self.ui.Scope_Recording_RecordFolder_value.text()
+        if self.ui.Scope_Recording_Format_comboBox.currentIndex() != 0:
+            Format = self.ui.Scope_Recording_Format_comboBox.currentText()
+        self.ui.Scope_Recording_FileName_label.setText(FolderName + '/' + FileName + Format)
+        self.ui.Scope_Virtual_FinalFileName_label = str(FolderName + '/' + FileName)
+        self.ui.Scope_Virtual_FileFormatName_label = str(FileName + Format)
+
+    def VideoFormat(self):
+        FolderName = self.ui.Scope_Virtual_FileName_label.text()
+        FileName = self.ui.Scope_Recording_RecordFolder_value.text()
+        if self.ui.Scope_Recording_Format_comboBox.currentIndex() != 0:
+            Format = self.ui.Scope_Recording_Format_comboBox.currentText()
+        self.ui.Scope_Recording_FileName_label.setText(FolderName + '/' + FileName + Format)
+        self.ui.Scope_Virtual_FileFormatName_label = str(FileName + Format)
 
 def PlayStimuli(self):
     self.currentLoop = 1
@@ -309,9 +336,9 @@ def PlayStimuli(self):
             FileName = self.ui.Scope_Stimulus_Label.text()
 
             Df = pd.read_csv(FileName)
-            for i in range (self.ui.Scope_nLED):
-                self.ui.Scope_Df[i] = Df[self.ui.Scope_Dataframe[i]]
-                self.Stim.append(self.ui.Scope_Df[i])
+            for i in range (self.ui.Opto_nLED):
+                self.ui.Opto_Df[i] = Df[self.ui.Opto_Dataframe[i]]
+                self.Stim.append(self.ui.Opto_Df[i])
 
             self.df_StimRes = Df["Resolution"]
             self.df_nEntries = Df["nEntries"]
@@ -332,7 +359,7 @@ def PlayStimuli(self):
 
 
     def SetTriggerMode(self):
-        self.TriggerMode = int(self.Stim[14][0])
+        self.TriggerMode = int(self.Stim[6][0])
 
         if self.TriggerMode == 0:
             self.serial_port.write(str('M ' + str(self.TriggerMode) + '\n').encode('utf-8'))
@@ -342,12 +369,12 @@ def PlayStimuli(self):
 
 
     def SetTrigger(self):
-        self.TriggerMode = int(self.Stim[14][0])
+        self.TriggerMode = int(self.Stim[6][0])
 
         if self.TriggerMode > 0:
             self.TriggerString = ""
             for i in range(self.TriggerMode):
-                self.TriggerString += ' ' + str(int(self.Stim[14][i+1]))
+                self.TriggerString += ' ' + str(int(self.Stim[6][i+1]))
             self.serial_port.write(str('T' + self.TriggerString + '\n').encode('utf-8'))
         elif self.TriggerMode == 0:
             pass
@@ -356,9 +383,9 @@ def PlayStimuli(self):
 
 
     def SetStimulus(self):
-        self.serial_port.write(str('S ' + str(self.Stim[12][0]) + ' '
-                                   + str(self.Stim[13][0]) + ' '
-                                   + str(self.Stim[15][0]) + ' '
+        self.serial_port.write(str('S ' + str(self.Stim[4][0]) + ' '
+                                   + str(self.Stim[5][0]) + ' '
+                                   + str(self.Stim[7][0]) + ' '
                                    + '\n').encode('utf-8'))
 
         for i in range (self.ui.Opto_nLED):
@@ -470,24 +497,22 @@ class Scope_Stimuli():
 
         self.FileName = self.ui.Scope_Stimulus_Label.text()
         self.Df = pd.read_csv(self.FileName)
-        self.Resolution = self.Df["Resolution"][0] / 1000
+        self.Resolution = self.Df["Resolution"][0]
         self.nEntries = self.Df["nEntries"][0]
         self.xStim = np.linspace(0,int(self.nEntries)*int(self.Resolution),int(self.nEntries))
 
 
         for i in range(self.ui.Opto_nLED):
-            if self.ui.Opto_LED_toggleButton[i].isChecked():
-                self.yStim = self.Df[self.ui.Scope_Dataframe[i]]
-                self.ui.Scope_Display1.plot(self.xStim,self.yStim,fillLevel=-0.3,brush=self.ui.Opto_Brush[i])
+            self.yStim = self.Df[self.ui.Opto_Dataframe[i]]
+            self.ui.Scope_Display1.plot(self.xStim,self.yStim,fillLevel=-0.3,brush=self.ui.Opto_Brush[i])
 
 
 
         self.ui.Scope_LED_counter = 0
         self.ui.Scope_LED_Index = []
         for i in range(self.ui.Opto_nLED):
-            if self.ui.Opto_LED_toggleButton[i].isChecked():
-                self.ui.Scope_LED_counter += 1
-                self.ui.Scope_LED_Index.append(i)
+            self.ui.Scope_LED_counter += 1
+            self.ui.Scope_LED_Index.append(i)
 
         def clearLayout(layout):
             while layout.count():
@@ -505,13 +530,13 @@ class Scope_Stimuli():
             self.Scope_Curve = pg.PlotCurveItem()
             self.ui.Scope_Graph.addItem(self.Scope_Curve)
             self.ui.Scope_Display2_Layout.addWidget(self.ui.Scope_Graph)
-            self.yStim = self.Df[self.ui.Scope_Dataframe[self.ui.Scope_LED_Index[i]]]
+            self.yStim = self.Df[self.ui.Opto_Dataframe[self.ui.Scope_LED_Index[i]]]
             self.ui.Scope_Graph.plot(self.xStim, self.yStim, fillLevel=-0.3, brush=self.ui.Opto_Brush[self.ui.Scope_LED_Index[i]])
 
 
     def Brush(self):
         for i in range (self.ui.Opto_nLED):
-            self.transparency = self.ui.Opto_LED_Slider[i].value()
+            self.transparency = 75
             self.ui.Opto_Brush[i][0] = self.ui.Opto_RGB[i][0]
             self.ui.Opto_Brush[i][1] = self.ui.Opto_RGB[i][1]
             self.ui.Opto_Brush[i][2] = self.ui.Opto_RGB[i][2]

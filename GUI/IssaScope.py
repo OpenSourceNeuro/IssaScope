@@ -23,7 +23,7 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QHBoxLayout,
 from pyqtgraph import PlotWidget
 import resources_rc
 
-class Ui_MainWindow(QWidget):
+class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
@@ -101,7 +101,15 @@ class Ui_MainWindow(QWidget):
 "	background-color: rgb(0, 30, 38);\n"
 "}\n"
 "\n"
-"\n"
+"#Scope_Recording_frame QComboBox{\n"
+"	border: 2px solid rgb(147,161,161);\n"
+"	background-color: rgb(7, 54, 66);\n"
+"	padding: 2px;\n"
+"}\n"
+"#Scope_Recording_frame QLineEdit{\n"
+"	border: 2px solid rgb(147,161,161);\n"
+"    background-color: rgb(7, 54, 66);\n"
+"}\n"
 "\n"
 "\n"
 "\n"
@@ -323,54 +331,6 @@ class Ui_MainWindow(QWidget):
 
 
         self.horizontalLayout_10.addWidget(self.Menu_Frame)
-
-        self.SubMenu_Frame = QFrame(self.CenterMainFrame)
-        self.SubMenu_Frame.setObjectName(u"SubMenu_Frame")
-        self.SubMenu_Frame.setMinimumSize(QSize(200, 0))
-        self.SubMenu_Frame.setMaximumSize(QSize(200, 16777215))
-        self.SubMenu_Frame.setFrameShape(QFrame.StyledPanel)
-        self.SubMenu_Frame.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_6 = QVBoxLayout(self.SubMenu_Frame)
-        self.verticalLayout_6.setSpacing(0)
-        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
-        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.HideSubMenu_Frame = QFrame(self.SubMenu_Frame)
-        self.HideSubMenu_Frame.setObjectName(u"HideSubMenu_Frame")
-        self.HideSubMenu_Frame.setFrameShape(QFrame.StyledPanel)
-        self.HideSubMenu_Frame.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_11 = QHBoxLayout(self.HideSubMenu_Frame)
-        self.horizontalLayout_11.setSpacing(0)
-        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
-        self.horizontalLayout_11.setContentsMargins(0, 0, 0, 0)
-        self.HideSubFrame_pushButton = QPushButton(self.HideSubMenu_Frame)
-        self.HideSubFrame_pushButton.setObjectName(u"HideSubFrame_pushButton")
-        self.HideSubFrame_pushButton.setMinimumSize(QSize(0, 30))
-        self.HideSubFrame_pushButton.setFont(font1)
-        self.HideSubFrame_pushButton.setLayoutDirection(Qt.RightToLeft)
-        icon9 = QIcon()
-        icon9.addFile(u":/resources/resources/DropMenuLeft.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.HideSubFrame_pushButton.setIcon(icon9)
-        self.HideSubFrame_pushButton.setIconSize(QSize(24, 24))
-
-        self.horizontalLayout_11.addWidget(self.HideSubFrame_pushButton, 0, Qt.AlignLeft)
-
-
-        self.verticalLayout_6.addWidget(self.HideSubMenu_Frame)
-
-        self.stackedWidget = QStackedWidget(self.SubMenu_Frame)
-        self.stackedWidget.setObjectName(u"stackedWidget")
-        self.stackedWidget.setMinimumSize(QSize(200, 0))
-        self.page = QWidget()
-        self.page.setObjectName(u"page")
-        self.stackedWidget.addWidget(self.page)
-        self.page_2 = QWidget()
-        self.page_2.setObjectName(u"page_2")
-        self.stackedWidget.addWidget(self.page_2)
-
-        self.verticalLayout_6.addWidget(self.stackedWidget)
-
-
-        self.horizontalLayout_10.addWidget(self.SubMenu_Frame)
 
         self.MainContent_Frame = QFrame(self.CenterMainFrame)
         self.MainContent_Frame.setObjectName(u"MainContent_Frame")
@@ -604,6 +564,7 @@ class Ui_MainWindow(QWidget):
         self.Scope_SelectPortComboBox = QComboBox(self.Scope_PortConnect_Frame)
         self.Scope_SelectPortComboBox.addItem("")
         self.Scope_SelectPortComboBox.setObjectName(u"Scope_SelectPortComboBox")
+        self.Scope_SelectPortComboBox.setEditable(False)
 
         self.horizontalLayout_14.addWidget(self.Scope_SelectPortComboBox)
 
@@ -671,7 +632,47 @@ class Ui_MainWindow(QWidget):
         self.verticalLayout_15.setSpacing(0)
         self.verticalLayout_15.setObjectName(u"verticalLayout_15")
         self.verticalLayout_15.setContentsMargins(0, 0, 0, 0)
-        self.Scope_Camera_pushButton_frame = QFrame(self.Scope_Camera_page)
+        self.frame = QFrame(self.Scope_Camera_page)
+        self.frame.setObjectName(u"frame")
+        self.frame.setMinimumSize(QSize(0, 25))
+        self.frame.setMaximumSize(QSize(16777215, 25))
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_75 = QHBoxLayout(self.frame)
+        self.horizontalLayout_75.setSpacing(100)
+        self.horizontalLayout_75.setObjectName(u"horizontalLayout_75")
+        self.horizontalLayout_75.setContentsMargins(0, 0, 0, 0)
+        self.Scope_Camera_Stream_pushButton_frame = QFrame(self.frame)
+        self.Scope_Camera_Stream_pushButton_frame.setObjectName(u"Scope_Camera_Stream_pushButton_frame")
+        self.Scope_Camera_Stream_pushButton_frame.setFrameShape(QFrame.StyledPanel)
+        self.Scope_Camera_Stream_pushButton_frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_88 = QHBoxLayout(self.Scope_Camera_Stream_pushButton_frame)
+        self.horizontalLayout_88.setSpacing(20)
+        self.horizontalLayout_88.setObjectName(u"horizontalLayout_88")
+        self.horizontalLayout_88.setContentsMargins(10, 0, 0, 0)
+        self.Scope_Camera_Stream_pushButton = QPushButton(self.Scope_Camera_Stream_pushButton_frame)
+        self.Scope_Camera_Stream_pushButton.setObjectName(u"Scope_Camera_Stream_pushButton")
+        self.Scope_Camera_Stream_pushButton.setMinimumSize(QSize(150, 0))
+        self.Scope_Camera_Stream_pushButton.setMaximumSize(QSize(150, 16777215))
+        self.Scope_Camera_Stream_pushButton.setCheckable(False)
+        self.Scope_Camera_Stream_pushButton.setChecked(False)
+
+        self.horizontalLayout_88.addWidget(self.Scope_Camera_Stream_pushButton)
+
+        self.Scope_Camera_Record_pushButton = QPushButton(self.Scope_Camera_Stream_pushButton_frame)
+        self.Scope_Camera_Record_pushButton.setObjectName(u"Scope_Camera_Record_pushButton")
+        self.Scope_Camera_Record_pushButton.setMaximumSize(QSize(150, 16777215))
+        self.Scope_Camera_Record_pushButton.setStyleSheet(u"color: rgb(250, 250, 250);\n"
+"background-color: rgb(220, 50, 47);")
+        self.Scope_Camera_Record_pushButton.setCheckable(True)
+        self.Scope_Camera_Record_pushButton.setChecked(False)
+
+        self.horizontalLayout_88.addWidget(self.Scope_Camera_Record_pushButton)
+
+
+        self.horizontalLayout_75.addWidget(self.Scope_Camera_Stream_pushButton_frame)
+
+        self.Scope_Camera_pushButton_frame = QFrame(self.frame)
         self.Scope_Camera_pushButton_frame.setObjectName(u"Scope_Camera_pushButton_frame")
         self.Scope_Camera_pushButton_frame.setMinimumSize(QSize(0, 20))
         self.Scope_Camera_pushButton_frame.setMaximumSize(QSize(16777215, 20))
@@ -696,10 +697,15 @@ class Ui_MainWindow(QWidget):
         self.horizontalLayout_31.addWidget(self.Scope_Camera_pushButton2)
 
 
-        self.verticalLayout_15.addWidget(self.Scope_Camera_pushButton_frame, 0, Qt.AlignRight)
+        self.horizontalLayout_75.addWidget(self.Scope_Camera_pushButton_frame)
+
+
+        self.verticalLayout_15.addWidget(self.frame)
 
         self.Scope_Camera = QFrame(self.Scope_Camera_page)
         self.Scope_Camera.setObjectName(u"Scope_Camera")
+        self.Scope_Camera.setMinimumSize(QSize(0, 0))
+        self.Scope_Camera.setMaximumSize(QSize(1280, 1024))
         self.Scope_Camera.setFrameShape(QFrame.StyledPanel)
         self.Scope_Camera.setFrameShadow(QFrame.Raised)
         self.verticalLayout_19 = QVBoxLayout(self.Scope_Camera)
@@ -712,6 +718,11 @@ class Ui_MainWindow(QWidget):
         self.Scope_Camera_Layout.setSpacing(0)
         self.Scope_Camera_Layout.setObjectName(u"Scope_Camera_Layout")
         self.Scope_Camera_Layout.setContentsMargins(0, 0, 0, 0)
+        self.Scope_Camera_label = QLabel(self.Scope_Camera_Widget)
+        self.Scope_Camera_label.setObjectName(u"Scope_Camera_label")
+
+        self.Scope_Camera_Layout.addWidget(self.Scope_Camera_label)
+
 
         self.verticalLayout_19.addWidget(self.Scope_Camera_Widget)
 
@@ -755,10 +766,10 @@ class Ui_MainWindow(QWidget):
         self.Scope_Display1 = PlotWidget(self.Scope_Display1_page)
         self.Scope_Display1.setObjectName(u"Scope_Display1")
         self.Scope_Display1.setMinimumSize(QSize(0, 0))
-        self.LEDZap_Display1_Layout = QVBoxLayout(self.Scope_Display1)
-        self.LEDZap_Display1_Layout.setSpacing(0)
-        self.LEDZap_Display1_Layout.setObjectName(u"LEDZap_Display1_Layout")
-        self.LEDZap_Display1_Layout.setContentsMargins(0, 2, 0, 0)
+        self.Scope_Display1_Layout = QVBoxLayout(self.Scope_Display1)
+        self.Scope_Display1_Layout.setSpacing(0)
+        self.Scope_Display1_Layout.setObjectName(u"Scope_Display1_Layout")
+        self.Scope_Display1_Layout.setContentsMargins(0, 2, 0, 0)
 
         self.verticalLayout_17.addWidget(self.Scope_Display1)
 
@@ -799,10 +810,10 @@ class Ui_MainWindow(QWidget):
         self.Scope_Display2 = PlotWidget(self.Scope_Display2_page)
         self.Scope_Display2.setObjectName(u"Scope_Display2")
         self.Scope_Display2.setMinimumSize(QSize(0, 0))
-        self.LEDZap_Display1_Layout_2 = QVBoxLayout(self.Scope_Display2)
-        self.LEDZap_Display1_Layout_2.setSpacing(0)
-        self.LEDZap_Display1_Layout_2.setObjectName(u"LEDZap_Display1_Layout_2")
-        self.LEDZap_Display1_Layout_2.setContentsMargins(0, 2, 0, 0)
+        self.Scope_Display2_Layout = QVBoxLayout(self.Scope_Display2)
+        self.Scope_Display2_Layout.setSpacing(0)
+        self.Scope_Display2_Layout.setObjectName(u"Scope_Display2_Layout")
+        self.Scope_Display2_Layout.setContentsMargins(0, 2, 0, 0)
 
         self.verticalLayout_18.addWidget(self.Scope_Display2)
 
@@ -944,7 +955,7 @@ class Ui_MainWindow(QWidget):
         self.Scope_Stimulus_Right_frame.setFrameShape(QFrame.StyledPanel)
         self.Scope_Stimulus_Right_frame.setFrameShadow(QFrame.Raised)
         self.verticalLayout_97 = QVBoxLayout(self.Scope_Stimulus_Right_frame)
-        self.verticalLayout_97.setSpacing(20)
+        self.verticalLayout_97.setSpacing(7)
         self.verticalLayout_97.setObjectName(u"verticalLayout_97")
         self.verticalLayout_97.setContentsMargins(0, 0, 0, 0)
         self.Scope_Stimulus_Play_frame = QFrame(self.Scope_Stimulus_Right_frame)
@@ -1109,6 +1120,122 @@ class Ui_MainWindow(QWidget):
 
         self.verticalLayout_9.addWidget(self.line)
 
+        self.label_5 = QLabel(self.Scope_Stimulus_frame)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setMaximumSize(QSize(16777215, 20))
+        font6 = QFont()
+        font6.setPointSize(12)
+        font6.setBold(True)
+        self.label_5.setFont(font6)
+
+        self.verticalLayout_9.addWidget(self.label_5, 0, Qt.AlignHCenter)
+
+        self.Scope_Recording_frame = QFrame(self.Scope_Stimulus_frame)
+        self.Scope_Recording_frame.setObjectName(u"Scope_Recording_frame")
+        self.Scope_Recording_frame.setFrameShape(QFrame.StyledPanel)
+        self.Scope_Recording_frame.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_6 = QVBoxLayout(self.Scope_Recording_frame)
+        self.verticalLayout_6.setSpacing(2)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.verticalLayout_6.setContentsMargins(5, 0, 5, 0)
+        self.Scope_Recording_Directory_frame = QFrame(self.Scope_Recording_frame)
+        self.Scope_Recording_Directory_frame.setObjectName(u"Scope_Recording_Directory_frame")
+        self.Scope_Recording_Directory_frame.setFrameShape(QFrame.StyledPanel)
+        self.Scope_Recording_Directory_frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_11 = QHBoxLayout(self.Scope_Recording_Directory_frame)
+        self.horizontalLayout_11.setSpacing(20)
+        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
+        self.horizontalLayout_11.setContentsMargins(0, 0, 0, 0)
+        self.Scope_Recording_BrowseDirectory_frame = QFrame(self.Scope_Recording_Directory_frame)
+        self.Scope_Recording_BrowseDirectory_frame.setObjectName(u"Scope_Recording_BrowseDirectory_frame")
+        self.Scope_Recording_BrowseDirectory_frame.setFrameShape(QFrame.StyledPanel)
+        self.Scope_Recording_BrowseDirectory_frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_87 = QHBoxLayout(self.Scope_Recording_BrowseDirectory_frame)
+        self.horizontalLayout_87.setSpacing(0)
+        self.horizontalLayout_87.setObjectName(u"horizontalLayout_87")
+        self.horizontalLayout_87.setContentsMargins(0, 0, 0, 0)
+        self.Scope_Recording_BrowseDirectory_pushButton = QPushButton(self.Scope_Recording_BrowseDirectory_frame)
+        self.Scope_Recording_BrowseDirectory_pushButton.setObjectName(u"Scope_Recording_BrowseDirectory_pushButton")
+        self.Scope_Recording_BrowseDirectory_pushButton.setMinimumSize(QSize(0, 20))
+        self.Scope_Recording_BrowseDirectory_pushButton.setMaximumSize(QSize(150, 16777215))
+
+        self.horizontalLayout_87.addWidget(self.Scope_Recording_BrowseDirectory_pushButton)
+
+
+        self.horizontalLayout_11.addWidget(self.Scope_Recording_BrowseDirectory_frame)
+
+        self.Scope_Recording_Format_frame = QFrame(self.Scope_Recording_Directory_frame)
+        self.Scope_Recording_Format_frame.setObjectName(u"Scope_Recording_Format_frame")
+        self.Scope_Recording_Format_frame.setFrameShape(QFrame.StyledPanel)
+        self.Scope_Recording_Format_frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_86 = QHBoxLayout(self.Scope_Recording_Format_frame)
+        self.horizontalLayout_86.setSpacing(0)
+        self.horizontalLayout_86.setObjectName(u"horizontalLayout_86")
+        self.horizontalLayout_86.setContentsMargins(0, 0, 0, 0)
+        self.Scope_Recording_Format_comboBox = QComboBox(self.Scope_Recording_Format_frame)
+        self.Scope_Recording_Format_comboBox.addItem("")
+        self.Scope_Recording_Format_comboBox.addItem("")
+        self.Scope_Recording_Format_comboBox.setObjectName(u"Scope_Recording_Format_comboBox")
+        self.Scope_Recording_Format_comboBox.setLayoutDirection(Qt.LeftToRight)
+
+        self.horizontalLayout_86.addWidget(self.Scope_Recording_Format_comboBox)
+
+
+        self.horizontalLayout_11.addWidget(self.Scope_Recording_Format_frame)
+
+
+        self.verticalLayout_6.addWidget(self.Scope_Recording_Directory_frame)
+
+        self.Scope_Recording_directory_frame = QFrame(self.Scope_Recording_frame)
+        self.Scope_Recording_directory_frame.setObjectName(u"Scope_Recording_directory_frame")
+        self.Scope_Recording_directory_frame.setFrameShape(QFrame.StyledPanel)
+        self.Scope_Recording_directory_frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_85 = QHBoxLayout(self.Scope_Recording_directory_frame)
+        self.horizontalLayout_85.setSpacing(10)
+        self.horizontalLayout_85.setObjectName(u"horizontalLayout_85")
+        self.horizontalLayout_85.setContentsMargins(0, 0, 0, 0)
+        self.Scope_Recording_SelectRecordFolder_label = QLabel(self.Scope_Recording_directory_frame)
+        self.Scope_Recording_SelectRecordFolder_label.setObjectName(u"Scope_Recording_SelectRecordFolder_label")
+
+        self.horizontalLayout_85.addWidget(self.Scope_Recording_SelectRecordFolder_label)
+
+        self.Scope_Recording_RecordFolder_value = QLineEdit(self.Scope_Recording_directory_frame)
+        self.Scope_Recording_RecordFolder_value.setObjectName(u"Scope_Recording_RecordFolder_value")
+        self.Scope_Recording_RecordFolder_value.setEnabled(False)
+
+        self.horizontalLayout_85.addWidget(self.Scope_Recording_RecordFolder_value)
+
+
+        self.verticalLayout_6.addWidget(self.Scope_Recording_directory_frame)
+
+        self.Scope_Recording_FileName_frame = QFrame(self.Scope_Recording_frame)
+        self.Scope_Recording_FileName_frame.setObjectName(u"Scope_Recording_FileName_frame")
+        self.Scope_Recording_FileName_frame.setFrameShape(QFrame.StyledPanel)
+        self.Scope_Recording_FileName_frame.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_21 = QVBoxLayout(self.Scope_Recording_FileName_frame)
+        self.verticalLayout_21.setSpacing(0)
+        self.verticalLayout_21.setObjectName(u"verticalLayout_21")
+        self.verticalLayout_21.setContentsMargins(0, 0, 0, 0)
+        self.Scope_Recording_FileName_label = QLabel(self.Scope_Recording_FileName_frame)
+        self.Scope_Recording_FileName_label.setObjectName(u"Scope_Recording_FileName_label")
+        self.Scope_Recording_FileName_label.setWordWrap(True)
+
+        self.verticalLayout_21.addWidget(self.Scope_Recording_FileName_label)
+
+
+        self.verticalLayout_6.addWidget(self.Scope_Recording_FileName_frame)
+
+
+        self.verticalLayout_9.addWidget(self.Scope_Recording_frame)
+
+        self.line_7 = QFrame(self.Scope_Stimulus_frame)
+        self.line_7.setObjectName(u"line_7")
+        self.line_7.setStyleSheet(u"background-color: rgb(0, 30, 38);")
+        self.line_7.setFrameShape(QFrame.HLine)
+        self.line_7.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout_9.addWidget(self.line_7)
+
         self.Scope_Opto_frame = QFrame(self.Scope_Stimulus_frame)
         self.Scope_Opto_frame.setObjectName(u"Scope_Opto_frame")
         self.Scope_Opto_frame.setMinimumSize(QSize(0, 0))
@@ -1122,9 +1249,6 @@ class Ui_MainWindow(QWidget):
         self.Opto_Label.setObjectName(u"Opto_Label")
         self.Opto_Label.setMinimumSize(QSize(0, 0))
         self.Opto_Label.setMaximumSize(QSize(16777215, 20))
-        font6 = QFont()
-        font6.setPointSize(12)
-        font6.setBold(True)
         self.Opto_Label.setFont(font6)
 
         self.verticalLayout_11.addWidget(self.Opto_Label, 0, Qt.AlignHCenter)
@@ -2508,9 +2632,9 @@ class Ui_MainWindow(QWidget):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
         self.Main_stackedWidget.setCurrentIndex(1)
         self.Scope_CameraSelectPortComboBox.setCurrentIndex(0)
+        self.Scope_Display_stackedWidget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -2528,7 +2652,6 @@ class Ui_MainWindow(QWidget):
         self.About_pushButton.setText(QCoreApplication.translate("MainWindow", u"About", None))
         self.Help_pushButton.setText(QCoreApplication.translate("MainWindow", u"Help", None))
         self.GitHub_pushButton.setText(QCoreApplication.translate("MainWindow", u"GitHub", None))
-        self.HideSubFrame_pushButton.setText(QCoreApplication.translate("MainWindow", u"Hide Sub-Menus", None))
         self.Home_Logo.setText("")
         self.Home_Title.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:48pt; color:#93a1a1;\">IssaScope </span><span style=\" font-size:16pt; color:#93a1a1;\">v1.0</span></p><p align=\"center\"><span style=\" font-size:16pt;\">An open source ethoscope for optogenetics stimulation</span></p><p align=\"right\"><span style=\" font-size:8pt; font-weight:700;\">Conceived and developed by M.J.Y. Zimmermann</span></p></body></html>", None))
         self.Home_Main_Text.setText(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -2551,13 +2674,16 @@ class Ui_MainWindow(QWidget):
 
         self.Scope_ConnectButton.setText(QCoreApplication.translate("MainWindow", u"Connect", None))
         self.Scope_CameraSelectPortLabel.setText(QCoreApplication.translate("MainWindow", u"Select Camera:", None))
-        self.Scope_CameraSelectPortComboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Select a COM port:", None))
-        self.Scope_CameraSelectPortComboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"Basler Camera", None))
-        self.Scope_CameraSelectPortComboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"USB Camera", None))
+        self.Scope_CameraSelectPortComboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Select a Camera", None))
+        self.Scope_CameraSelectPortComboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"USB Camera", None))
+        self.Scope_CameraSelectPortComboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"Basler Camera acA1300-200um", None))
 
-        self.Scope_CameraSelectPortComboBox.setCurrentText(QCoreApplication.translate("MainWindow", u"Select a COM port:", None))
+        self.Scope_CameraSelectPortComboBox.setCurrentText(QCoreApplication.translate("MainWindow", u"Select a Camera", None))
+        self.Scope_Camera_Stream_pushButton.setText(QCoreApplication.translate("MainWindow", u"Start Camera", None))
+        self.Scope_Camera_Record_pushButton.setText(QCoreApplication.translate("MainWindow", u"Record", None))
         self.Scope_Camera_pushButton1.setText(QCoreApplication.translate("MainWindow", u"Single stimulus display", None))
         self.Scope_Camera_pushButton2.setText(QCoreApplication.translate("MainWindow", u"Multiple  stimulus display", None))
+        self.Scope_Camera_label.setText("")
         self.Scope_Display1_pushButton1.setText(QCoreApplication.translate("MainWindow", u"Camera", None))
         self.Scope_Display1_pushButton2.setText(QCoreApplication.translate("MainWindow", u"Multiple stimulus display", None))
         self.Scope_Display2_pushButton1.setText(QCoreApplication.translate("MainWindow", u"Camera", None))
@@ -2570,12 +2696,20 @@ class Ui_MainWindow(QWidget):
         self.Scope_Stop_pushButton.setText(QCoreApplication.translate("MainWindow", u"Stop", None))
         self.Scope_NumbeofLoop_Label.setText(QCoreApplication.translate("MainWindow", u"Number of Loop :", None))
         self.Scope_NumbeofLoop.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Recording", None))
+        self.Scope_Recording_BrowseDirectory_pushButton.setText(QCoreApplication.translate("MainWindow", u"Browse directory", None))
+        self.Scope_Recording_Format_comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Select Video format", None))
+        self.Scope_Recording_Format_comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u".avi", None))
+
+        self.Scope_Recording_SelectRecordFolder_label.setText(QCoreApplication.translate("MainWindow", u"Data Logging: Filename", None))
+        self.Scope_Recording_RecordFolder_value.setText("")
+        self.Scope_Recording_FileName_label.setText("")
         self.Opto_Label.setText(QCoreApplication.translate("MainWindow", u"Optogenetics", None))
-        self.Opto1_Display_label.setText(QCoreApplication.translate("MainWindow", u"Opto 1", None))
+        self.Opto1_Display_label.setText(QCoreApplication.translate("MainWindow", u"625 nm", None))
         self.Opto1_Value.setText("")
-        self.Opto2_Display_label.setText(QCoreApplication.translate("MainWindow", u"Opto 2", None))
+        self.Opto2_Display_label.setText(QCoreApplication.translate("MainWindow", u"525 nm", None))
         self.Opto2_Value.setText("")
-        self.Opto3_Display_label.setText(QCoreApplication.translate("MainWindow", u"Opto 3", None))
+        self.Opto3_Display_label.setText(QCoreApplication.translate("MainWindow", u"465 nm", None))
         self.Opto3_Value.setText("")
         self.Opto4_Display_label.setText(QCoreApplication.translate("MainWindow", u"Opto 4", None))
         self.Opto4_Value.setText("")

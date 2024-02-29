@@ -4,11 +4,11 @@
 import sys
 import os
 import serial
-
+from pypylon import pylon
 # Import QT libraries
 from PySide6 import QtCore, QtGui, QtWidgets, QtSerialPort
-from PySide6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
+from PySide6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent,Slot)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QImage, QRadialGradient)
 from PySide6.QtWidgets import *
 from PySide6.QtSerialPort import QSerialPort, QSerialPortInfo
 
@@ -93,16 +93,12 @@ class MainWindow(QMainWindow):
         self.icon_DropMenuLeft.addFile(u":/resources/resources/DropMenuLeft.png", QSize(), QIcon.Normal, QIcon.Off)
         self.icon_MenuLeft = QIcon()
         self.icon_MenuLeft.addFile(u":/resources/resources/MenuLeft.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.ui.SubMenu_Frame.setMaximumSize(QSize(0, 16777215))
-        self.ui.SubMenu_Frame.setMinimumSize(QSize(0, 16777215))
         self.ui.Menu_Frame.setMinimumSize(QSize(leftMenu_min, 16777215))
         self.ui.DropMenu_pushButton.clicked.connect(lambda: UIFunctions.toggleMenu(self, self.ui.Menu_Frame, leftMenu_min, leftMenu_max, animation_speed,
                                                                                    self.ui.DropMenu_pushButton, self.icon_MenuLeft, self.icon_DropMenuLeft, True))
 
         # Left Menu Container
         self.ui.Scope_pushButton.clicked.connect(lambda: Page101.Scope.ShowPage(self))
-        self.ui.HideSubFrame_pushButton.clicked.connect(lambda: UIFunctions.collapseMenu(self, self.ui.SubMenu_Frame, centerMenu_min, centerMenu_max, animation_speed, True))
-
 
         ########################################################################
         # Home Page - page000
@@ -117,6 +113,7 @@ class MainWindow(QMainWindow):
         # Display page101 when LED Zappelin button is clicked
         self.ui.Scope_pushButton.clicked.connect(lambda: Page101.Scope.ShowPage(self))
 
+
         #Init Flag and Monitor
         self.ui.Scope_Serial_label.setText('Select a COM port to connect the device')
         self.ui.Scope_ConnectFlag = False
@@ -126,12 +123,24 @@ class MainWindow(QMainWindow):
         self.ui.Scope_PlayingFlag = False
         self.ui.GetWhiteLEDFlag = True
         self.ui.GetIRLEDFlag = True
+        self.ui.GetOptoLEDFlag = True
         self.ui.Scope_Display1.clear()
         Page101.Scope_Stimuli.SetGraph(self)
         self.ui.Scope_LED_counter = 0
 
-        # Camera connect buttons
-        self.ui.Scope_CameraSelectPortComboBox.currentIndexChanged.connect(lambda: Camera_Thread.Camera.ConnectCamera(self))
+        self.CameraUSBFlag = True
+        self.CameraBaslerFlag = True
+        self.ui.Scope_Camera_Stream_pushButton.clicked.connect(lambda: Camera_Thread.CameraClass.Camera(self))
+
+        # Data Recording
+        self.ui.Scope_Virtual_FolderName_label = QLabel()
+        self.ui.Scope_Virtual_FileName_label = QLabel()
+        self.ui.Scope_Virtual_FileFormatName_label = QLabel()
+        self.ui.Scope_Virtual_FinalFileName_label = QLabel()
+        self.ui.Scope_Recording_BrowseDirectory_pushButton.clicked.connect(lambda:Page101.Scope.BrowseRecordFolder(self))
+        self.ui.Scope_Recording_RecordFolder_value.textChanged.connect(lambda: Page101.Scope.RecordFolderText(self))
+        self.ui.Scope_Recording_Format_comboBox.currentIndexChanged.connect(lambda: Page101.Scope.VideoFormat(self))
+        self.ui.Scope_Camera_Record_pushButton.clicked.connect(lambda: Camera_Thread.CameraClass.Record(self))
 
         # Update connected port COM and append them
         for i in range(len(ports)):
@@ -188,9 +197,16 @@ class MainWindow(QMainWindow):
 
 
     ########################################################################
-
     # Display
+    #     self.th = Camera_Thread.Camera(self)
+    #     self.th.start()
         self.show()
+
+    @Slot(QImage)
+    def setImage(self, image):
+        self.ui.Scope_Camera_label.setPixmap(QPixmap.fromImage(image))
+
+
 
     ## APP EVENTS
     def mousePressEvent(self, event):

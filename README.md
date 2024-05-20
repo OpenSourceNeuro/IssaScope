@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center"> Issa Scope v0.2</h1>
-<h3 align="center">  An Ethoscope for optogenetics behavioural essays</h3></p>
+<h3 align="center">  An ethoscope for optogenetics behavioural essays</h3></p>
 <h6 align="right">developed by M.J.Y. Zimmermann</h6>
 
 <br>
@@ -15,11 +15,22 @@ The hardware is licensed under the <a href="https://cern-ohl.web.cern.ch">CERN O
 
 <br>
 
+***
+
+<br>
 
 - [Introduction](#Introduction)
 - [Ethoscope](#Ethoscope)
 - [PCB](#PCB)
+- [ESP32/Arduino microcontroller](#Microcontroller)
 - [GUI](#GUI)
+- [To-Do-List](#To-Do-List)
+
+<br>
+
+***
+
+<br>
 
 
 ## Introduction
@@ -33,13 +44,23 @@ The hardware is licensed under the <a href="https://cern-ohl.web.cern.ch">CERN O
 
 ## Ethoscope
 <p align="justify">
-The Ethoscope consists of 15mm extruded aluminium bars purchased from <a href="https://www.makerbeam.com/makerbeamxl/">MakerBeam</a> (XL profile)
+The Ethoscope consists of 15mm extruded aluminium bars purchased from <a href="https://www.makerbeam.com/makerbeamxl/">MakerBeam</a> (XL profile), and 3D printed parts.
 </p>
+
 
 <br>
 
 
 ## PCB
+
+<p align="justify">
+
+</p>
+
+<br>
+
+
+## Microcontroller
 
 <p align="justify">
 
@@ -54,3 +75,8 @@ The Ethoscope consists of 15mm extruded aluminium bars purchased from <a href="h
 </p>
 
 <br>
+
+
+## To-Do-List
+
+- Find suitable material for close up hanging LEDs

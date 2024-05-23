@@ -24,7 +24,11 @@ The hardware is licensed under the <a href="https://cern-ohl.web.cern.ch">CERN O
 - [PCB](#PCB)
 - [ESP32/Arduino microcontroller](#Microcontroller)
   - [Driver Installation](#Driver_Installation)
+  - [Arduino Environment](#Arduino_IDE)
+  - [Compiling and uploading code](#Compiling_the_code)
 - [GUI](#GUI)
+  - [PyQt Script](#PyQt)
+  - [Scope Software](#Software)
 
 - [To-Do-List](#To-Do-List)
 
@@ -54,14 +58,17 @@ The Ethoscope consists of 15mm extruded aluminium bars purchased from <a href="h
 
 
 ## PCB
+<br>
+<div align= "justify">
 
-<p align="justify">
+<p>
 Dedicated PCBs for all electronics components contained in the scope base and platform stimulating LEDs can be found <a href="https://github.com/OpenSourceNeuro/IssaScope/tree/main/PCB"><strong>here</strong></a> along with detailed instructions to reproduce and adapt them.
+</p>
 
 <br></br>
 <h3 align="left">Ethoscope Main Board</h3></p>
 
-<p align="justify">
+<p>
 The PCB is built around an <a href="https://www.espressif.com/en/products/socs/esp32">ESP32</a>, a microcontroller which exchanges signals with the recording setup, and the <a href="https://www.ti.com/lit/ds/symlink/tlc5947.pdf">TLC5947 LED driver</a>, which allows linear intensity control over all stimulating lights. The microcontroller runs on C++ however, users do not need to interfere with the source code as we provide an intuitive and interactive <a href="">Graphical User Interface</a> (GUI), from which all functions and variables can be manipulated.
 </p>
 
@@ -75,7 +82,7 @@ The PCB is built around an <a href="https://www.espressif.com/en/products/socs/e
 
 <br>
 
-<p align="justify">
+<p>
 The board provides connections via Molex JST plugs for 4 * four LED channels meant to be used for 4 * four distinct optogenetics light sources.
 
 It also provides ports for base illumination for both white and infra red lights, designed for providing light below the samples.
@@ -87,22 +94,21 @@ The board takes a 24V input, a tension above this value will result in damaging 
 
 <br></br>
 
-<p align="justify">
+<p>
 This repository contains detailed <a href="https://github.com/OpenSourceNeuro/OpenSpritzer-V2/blob/main/Installation_Manual.md">assembly instructions and an operation manual</a> for the Scope electronics assembly. The <a href="https://github.com/OpenSourceNeuro/OpenSpritzer-V2/blob/main/BOM.csv">bill of material</a> details all components required.
 </p>
 
-<p align="justify">
+<p>
 To simplify the wiring assembly, a customed circuit board has been designed. PCB prototype companies (i.e. <a href="jlcpcb.com"> JLCPCB</a>) will only require the <a href="https://github.com/OpenSourceNeuro/IssaScope/tree/main/PCB/IssaScope_gerbers  "> gerber.zip</a> folder to be sent to them for production.
 </p>
 
+</div>
 <br></br>
 
 ## Microcontroller
 
 #### Driver_Installation
-
 <br>
-
 <div align= "justify">
 
 <p>
@@ -114,32 +120,17 @@ Once the driver has been installed, users can upload and modify the <a href="htt
 </p>
 
 </div>
-
 <br></br>
 
-<h4 align="left">Microcontroller Arduino code</h4></p>
-
+##### Arduino_IDE
 <br>
-
-##### Arduino IDE
-
-<br>
-
-<div align= "justify">
+<div align="justify">
 
 <p>
 The ESP32 microcontroller runs a C++ code which can be accessed via the Arduino IDE, which can be downloaded <a href="https://www.arduino.cc/en/software"><strong>here</strong></a>.
 </p>
 
-</div>
-
-<br>
-
-##### ESP32 Add-on
-
-<br>
-
-<div align= "justify">
+<br></br>
 
 <p>
 <img align="right" height="200" src="./Images/Arduino01.png">
@@ -151,8 +142,9 @@ In the Arduino IDE, go to <strong> File > Preferences </strong>
 Enter the following link into the <strong>Additional Board Manager URLs</strong> field:
 
 https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
-
 </p>
+
+<br></br>
 
 <p>
 <img align="center" height="300" src="./Images/Arduino02.png">
@@ -165,19 +157,26 @@ Then click on the <strong>OK</strong> button.
 Next, open the Boards Manager. Go to <strong> Tools > Board > Board Manager...</strong>
 
 Search for ESP32 and press install button for the <strong>ESP32 by Espressif Systems</strong>.
+</p>
 
+<br></br>
+
+<p>
 <img align="center" height="300" src="./Images/Arduino03.png">
 Then click on the <strong>Install</strong> button.
 </p>
 
-</div>
-
 <br></br>
 
-##### Compiling the code
+<p>
+Finally and in a smiilar manner the library <strong>Adafruit_TLC5947</strong> needs to be installed.
+</p>
 
+</div>
+<br></br>
+
+##### Compiling_the_code
 <br>
-
 <div align= "justify">
 
 <p>
@@ -191,20 +190,51 @@ Go to <strong>Tools > Board > esp32 > ESP32 Dev Module </strong>
 The board name should be displayed  as shown.
 </p>
 
+</div>
 <br></br>
-</p>
-
-<br></br>
-
 
 ## GUI
-<p align="justify">
+<div align="justify">
 
+<p>
+A Graphical User Interface (GUI) dedicated to this project was designed using the python PyQt6/PySide6 libraries. The entire script can be found <a href="https://github.com/OpenSourceNeuro/IssaScope/tree/main/GUI/PyQt"><strong>here</strong></a>.
 </p>
+
+</div>
+<br></br>
+
+#### PyQt
+<br>
+<div align="justify">
+
+githubusercontent
 
 <br></br>
 
+#### Software
+<br>
+<div align="justify">
+
+<p>
+The python script for the GUI can be run directly from a python environment, or run from a <strong>.exe</strong> file which can be found <a href=""><strong>here</strong></a>
+</p>
+
+<p>
+On the main screen, Users can fi
+</p>
+
+<img align="center" height="300" src="./Images/GUI01.png">
+
+</div>
+<br></br>
 
 ## To-Do-List
+<br>
+<div align="justify">
+
 
 - Find suitable material for close up hanging LEDs
+- Make an equivalent to the GUI using Bonsai
+
+</div>
+<br></br>

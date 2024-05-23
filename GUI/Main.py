@@ -18,7 +18,7 @@ from Colours import *
 from Arrays import *
 
 # Import GUI page scripts
-import Page000, Page101, Camera_Thread
+import Page000, Page101, Page201, Page301, Camera_Thread
 
 
 # Setting UART parameters
@@ -98,7 +98,9 @@ class MainWindow(QMainWindow):
                                                                                    self.ui.DropMenu_pushButton, self.icon_MenuLeft, self.icon_DropMenuLeft, True))
 
         # Left Menu Container
-        self.ui.Scope_pushButton.clicked.connect(lambda: Page101.Scope.ShowPage(self))
+        self.ui.DrosoScope_pushButton.clicked.connect(lambda: Page101.Scope.ShowPage(self))
+        self.ui.LarvaScope_pushButton.clicked.connect(lambda: Page201.Scope.ShowPage(self))
+        self.ui.Stimulus_pushButton.clicked.connect(lambda: Page301.ShowPage(self))
 
         ########################################################################
         # Home Page - page000
@@ -109,10 +111,6 @@ class MainWindow(QMainWindow):
 
         ########################################################################
         # Scope Page - page101
-
-        # Display page101 when LED Zappelin button is clicked
-        self.ui.Scope_pushButton.clicked.connect(lambda: Page101.Scope.ShowPage(self))
-
 
         #Init Flag and Monitor
         self.ui.Scope_Serial_label.setText('Select a COM port to connect the device')
@@ -128,6 +126,8 @@ class MainWindow(QMainWindow):
         Page101.Scope_Stimuli.SetGraph(self)
         self.ui.Scope_LED_counter = 0
 
+
+        # Camera
         self.CameraUSBFlag = True
         self.CameraBaslerFlag = True
         self.ui.Scope_Camera_Stream_pushButton.clicked.connect(lambda: Camera_Thread.CameraClass.Camera(self))
@@ -196,10 +196,26 @@ class MainWindow(QMainWindow):
         self.ui.IR4_toggleButton.toggled.connect(lambda: Page101.Scope.DeactivateIRLED(self, 3))
 
 
+
+
+        ########################################################################
+        # Scope2 Page - page201
+
+
+        ########################################################################
+        # Stimulus Page - page301
+
+        # Change Stimulus parameter page
+        self.ui.StimulusGenerator_Selection_comboBox.currentIndexChanged.connect(lambda: Page301.ChangeStimulusParameter(self))
+        # Display stimulus generated
+        self.ui.StimulusGenerator_Display_pushButton.clicked.connect(lambda: Page301.StimulusGenerator.DrawStimulus(self))
+        # Save current stimulus
+        self.ui.StimulusGenerator_Save_pushButton.clicked.connect(lambda: Page301.StimulusGenerator.SaveStimulus(self))
+        # Adapt Chirp page parameters to current selection
+        self.ui.Chirp_comboBox.currentIndexChanged.connect(lambda: Page301.ChangeChirpParameter(self))
+
     ########################################################################
-    # Display
-    #     self.th = Camera_Thread.Camera(self)
-    #     self.th.start()
+
         self.show()
 
     @Slot(QImage)

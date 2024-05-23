@@ -23,7 +23,7 @@ The hardware is licensed under the <a href="https://cern-ohl.web.cern.ch">CERN O
 - [EthoScope](#Ethoscope)
 - [PCB](#PCB)
 - [ESP32/Arduino microcontroller](#Microcontroller)
-  - [Driver Installation](#Driver%20Installation)
+  - [Driver Installation](#Driver_Installation)
 - [GUI](#GUI)
 
 - [To-Do-List](#To-Do-List)
@@ -99,7 +99,7 @@ To simplify the wiring assembly, a customed circuit board has been designed. PCB
 
 ## Microcontroller
 
-#### Driver Installation
+#### Driver_Installation
 
 <br>
 
